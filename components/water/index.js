@@ -1,1 +1,3 @@
-module.exports = require('./waterAPI');
+module.exports = {
+  api: require('./waterAPI')
+};
