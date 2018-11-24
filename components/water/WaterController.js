@@ -1,57 +1,44 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-
-const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-
 const Water = require('./Water');
 
-// <<< GET >>> returns all water tests in db
-router.get('/', (req, res) => {
-  Water.find({}, (err, tests) => {
-    if (err) return res.status(500).send('Error reading water readings from database');
-    res.status(200).send(tests);
+getAllWaterTests = (callBack) => {
+  Water.find({}, (err, waterTests) => {
+    if (err) callBack(true);
+    else callBack(false, waterTests);
   });
-});
+};
 
-// <<< GET >>> returns one water test
-router.get('/:id', (req, res) => {
-  Water.findById(req.params.id, (err, water) => {
-    if (err) return res.status(500).send(`Error requesting water with id ${req.params.id}`);
-    else if (!water) return res.status(404).send('Water test not found');
-    res.status(200).send(water);
+getWaterTestById = (id, callBack) => {
+  Water.findById(id, (err, waterTest) => {
+    if (err) callBack(true);
+    else callBack(false, waterTest);
   });
-});
+};
 
-// <<< POST >>> adds new water test
-router.post('/', (req, res) => {
-  Water.create({
-    ph: req.body.ph
-  }, (err, water) => {
-    if (err) return res.status(500).send('Error adding water test');
-    res.status(200).send(water);
+createWaterTest = (waterTest, callBack) => {
+  Water.create(waterTest, (err, water) => {
+    if (err) callBack(true);
+    else callBack(false, water);
   });
-});
+};
 
-// <<< PUT >>> updates a water test
-router.put('/:id', (req, res) => {
-  Water.findByIdAndUpdate(req.params.id, {
-    ph: req.body.ph
-  }, {
-    new: true
-  }, (err, water) => {
-    if (err) return res.status(500).send(`Error updating water with id ${req.params.id}`);
-    res.status(200).send(water);
+updateWaterTest = (id, waterParams, callBack) => {
+  Water.findByIdAndUpdate(id, waterParams, {new: true}, (err, waterTest) => {
+    if (err) callBack(true);
+    else callBack(false, waterTest);
   });
-});
+};
 
-// <<< DELETE >>> deletes a water test
-router.delete('/:id', (req, res) => {
-  Water.findByIdAndRemove(req.params.id, (err, water) => {
-    if (err) return res.status(500).send(`Error removing water test with id ${req.params.id}`);
-    res.status(200).send('Deleted water test');
+deleteWaterTest = (id, callBack) => {
+  Water.findByIdAndRemove(id, (err, water) => {
+    if (err) callBack(true);
+    else callBack(false, water);
   });
-});
+};
 
-module.exports = router;
+module.exports = {
+  getAllWaterTests,
+  getWaterTestById,
+  createWaterTest,
+  updateWaterTest,
+  deleteWaterTest
+};

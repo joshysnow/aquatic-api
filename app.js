@@ -2,7 +2,7 @@ const express = require('express');
 const dbConnection = require('./db');
 const app = express();
 
-const WaterController = require('./components/Water').WaterController;
-app.use('/water', WaterController);
+const WaterAPI = require('./components/Water');
+app.use('/water', WaterAPI);
 
 module.exports = app;
