@@ -2,10 +2,14 @@
   "name": "aquatic-api",
   "version": "1.0.0",
   "description": "A CRUD API for water stats, water changes, supplements etc. added to aquariums",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive ./app/**/*.test.js"
   },
   "author": "Hirst J.",
   "license": "ISC",
@@ -15,6 +19,9 @@
     "mongoose": "^5.3.13"
   },
   "devDependencies": {
-    "nodemon": "^1.18.6"
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.6",
+    "sinon": "^7.1.1"
   }
 }
