@@ -157,4 +157,110 @@ describe('Water Controller', () => {
       assert.isTrue(spyCallback.calledWith(false, undefined));
     });
   });
+
+  describe('PUT /water', () => {
+    beforeEach(() => {
+      sinon.stub(Water, 'findByIdAndUpdate');
+    });
+    afterEach(() => {
+      Water.findByIdAndUpdate.restore();
+    });
+
+    it('should query to update document', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+      const waterTest = 'test';
+
+      Water.findByIdAndUpdate.yields(true);
+      WaterController.updateWaterTest(id, waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.called);
+      assert.isTrue(Water.findByIdAndUpdate.calledBefore(spyCallback));
+    });
+
+    it('should update document', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+      const waterTest = 'test';
+
+      Water.findByIdAndUpdate.yields(false, waterTest);
+      WaterController.updateWaterTest(id, waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, waterTest));
+    });
+
+    it('should raise an error', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+      const waterTest = 'test';
+
+      Water.findByIdAndUpdate.yields(true);
+      WaterController.updateWaterTest(id, waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(true));
+    });
+
+    it('should not raise an error', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+      const waterTest = 'test';
+
+      Water.findByIdAndUpdate.yields(false, undefined);
+      WaterController.updateWaterTest(id, waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, undefined));
+    });
+  });
+
+  describe('DELETE /water', () => {
+    beforeEach(() => {
+      sinon.stub(Water, 'findByIdAndRemove');
+    });
+    afterEach(() => {
+      Water.findByIdAndRemove.restore();
+    });
+
+    it('should query to delete document', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+
+      Water.findByIdAndRemove.yields(true);
+      WaterController.deleteWaterTest(id, spyCallback);
+
+      assert.isTrue(spyCallback.called);
+      assert.isTrue(Water.findByIdAndRemove.calledBefore(spyCallback));
+    });
+
+    it('should delete document', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+      const waterTest = 'test';
+
+      Water.findByIdAndRemove.yields(false, waterTest);
+      WaterController.deleteWaterTest(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, waterTest));
+    });
+
+    it('should raise an error', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+
+      Water.findByIdAndRemove.yields(true);
+      WaterController.deleteWaterTest(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(true));
+    });
+
+    it('should not raise an error', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+      const waterTest = 'test';
+
+      Water.findByIdAndRemove.yields(false, waterTest);
+      WaterController.deleteWaterTest(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, waterTest));
+    });
+  });
 });
