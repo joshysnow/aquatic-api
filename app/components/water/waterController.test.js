@@ -56,6 +56,7 @@ describe('Water Controller', () => {
       assert.isTrue(spyCallback.calledWith(false, undefined));
     });
   });
+
   describe('GET /water/:id', () => {
     beforeEach(() => {
       sinon.stub(Water, 'findById');
@@ -102,6 +103,56 @@ describe('Water Controller', () => {
 
       Water.findById.yields(false, undefined);
       WaterController.getWaterTestById(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, undefined));
+    });
+  });
+
+  describe('POST /water', () => {
+    beforeEach(() => {
+      sinon.stub(Water, 'create');
+    });
+    afterEach(() => {
+      Water.create.restore();
+    });
+
+    it('should query to create document', () => {
+      const spyCallback = sinon.spy();
+      const waterTest = 'test';
+
+      Water.create.yields(true);
+      WaterController.createWaterTest(waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.called);
+      assert.isTrue(Water.create.calledBefore(spyCallback));
+    });
+
+    it('should create document', () => {
+      const spyCallback = sinon.spy();
+      const waterTest = 'test';
+
+      Water.create.yields(false, waterTest);
+      WaterController.createWaterTest(waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, waterTest));
+    });
+
+    it('should raise an error', () => {
+      const spyCallback = sinon.spy();
+      const waterTest = 'test';
+
+      Water.create.yields(true);
+      WaterController.createWaterTest(waterTest, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(true));
+    });
+
+    it('should not raise an error', () => {
+      const spyCallback = sinon.spy();
+      const waterTest = 'test';
+
+      Water.create.yields(false, undefined);
+      WaterController.createWaterTest(waterTest, spyCallback);
 
       assert.isTrue(spyCallback.calledWith(false, undefined));
     });
