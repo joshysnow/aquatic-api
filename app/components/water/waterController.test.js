@@ -56,4 +56,54 @@ describe('Water Controller', () => {
       assert.isTrue(spyCallback.calledWith(false, undefined));
     });
   });
+  describe('GET /water/:id', () => {
+    beforeEach(() => {
+      sinon.stub(Water, 'findById');
+    });
+    afterEach(() => {
+      Water.findById.restore();
+    });
+
+    it('should query for document', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+
+      Water.findById.yields(true);
+      WaterController.getWaterTestById(id, spyCallback);
+
+      assert.isTrue(spyCallback.called);
+      assert.isTrue(Water.findById.calledBefore(spyCallback));
+    });
+
+    it('should return document', () => {
+      const expectedResults = {hasAttribute: true};
+      const spyCallback = sinon.spy();
+      const id = 'id';
+
+      Water.findById.yields(false, expectedResults);
+      WaterController.getWaterTestById(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, expectedResults));
+    });
+
+    it('should raise an error', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+
+      Water.findById.yields(true);
+      WaterController.getWaterTestById(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(true));
+    });
+
+    it('should not raise an error', () => {
+      const spyCallback = sinon.spy();
+      const id = 'id';
+
+      Water.findById.yields(false, undefined);
+      WaterController.getWaterTestById(id, spyCallback);
+
+      assert.isTrue(spyCallback.calledWith(false, undefined));
+    });
+  });
 });
