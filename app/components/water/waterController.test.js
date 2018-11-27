@@ -3,7 +3,6 @@ process.env.NODE_ENV = 'test';
 const sinon = require('sinon');
 const chai = require('chai');
 
-const expect = chai.expect;
 const assert = chai.assert;
 
 const Water = require('./Water');
