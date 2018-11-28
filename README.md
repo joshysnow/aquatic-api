@@ -9,6 +9,6 @@ A simple Node REST service for storing water tests in a local MongoDB.
   - npm test
 
 ### API
-  NodeJS, express. & mongoose.
+  NodeJS, express & mongoose.
 ### Test Tools
   mocha, sinon, chai, supertest & proxyquire.
