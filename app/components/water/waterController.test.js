@@ -157,7 +157,7 @@ describe('Water Controller', () => {
     });
   });
 
-  describe('PUT /water', () => {
+  describe('PUT /water/:id', () => {
     beforeEach(() => {
       sinon.stub(Water, 'findByIdAndUpdate');
     });
@@ -211,7 +211,7 @@ describe('Water Controller', () => {
     });
   });
 
-  describe('DELETE /water', () => {
+  describe('DELETE /water/:id', () => {
     beforeEach(() => {
       sinon.stub(Water, 'findByIdAndRemove');
     });
