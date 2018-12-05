@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const waterSchema = new mongoose.Schema({
-  date: { type: Date, default: Date.now },
+  timestamp: { type: Date, default: Date.now },
   ph: Number,
   kh: Number,
   gh: Number,
