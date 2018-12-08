@@ -4,6 +4,7 @@ getRequestId = (req) => {
 
 getRequestWaterTest = (req) => {
   return {
+    timestamp: req.body.timestamp,
     ph: req.body.ph,
     kh: req.body.kh,
     gh: req.body.gh,

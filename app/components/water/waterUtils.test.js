@@ -16,6 +16,7 @@ describe('Water Utils', () => {
   describe('Get Request Water', () => {
     const req = {
       body: {
+        timestamp: 'time',
         ph: '7.2',
         kh: '3',
         gh: '4',
@@ -25,6 +26,10 @@ describe('Water Utils', () => {
         phosphate: '0.2'
       }
     };
+    it('extracts timestamp', () => {
+      const result = WaterUtils.getRequestWaterTest(req);
+      expect(result.timestamp).to.equal('time');
+    });
     it('extracts ph', () => {
       const result = WaterUtils.getRequestWaterTest(req);
       expect(result.ph).to.equal('7.2');
